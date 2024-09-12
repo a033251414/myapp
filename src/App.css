@@ -1,38 +1,1199 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: rgb(232, 232, 206);
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+/*首頁頁面*/
+.carousel {
+  text-align: center;
+}
+.carousel p {
+  font-size: 40px;
+}
+.slick-slider {
+  width: 40%;
+  margin: auto;
+  border: 4px dashed rgb(159, 159, 135);
+}
+
+.recommend-img {
+  width: 200px;
+  height: 200px;
+}
+
+.coupon-icon {
+  width: 150px;
+  height: 150px;
+  position: fixed;
+  right: 30px;
+  top: 200px;
+  z-index: 2;
+}
+
+/*底邊*/
+
+.footer {
+  background-color: rgb(196, 196, 173);
+  width: 100%;
+  height: 10rem;
+  position: relative;
+  margin-top: auto;
+  text-align: center;
+  border-top: 5px solid rgb(250, 250, 216);
+}
+
+/*導覽列*/
+.navbar {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: beige;
+  position: relative;
+  z-index: 1;
+}
+.navbar .left {
+  display: flex;
+  align-items: center;
+}
+.center {
+  width: 50%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background-color: beige;
+  padding-left: 15rem;
+  position: relative;
+}
+.navbar .right {
+  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  background-color: beige;
+  padding-right: 5rem;
+}
+.navbar .right .action-links {
+  display: flex;
+}
+
+.navbar .right .useremail {
+  margin-bottom: 5px;
+}
+
+.nav-button,
+.nav-buttons {
+  margin-left: 10px;
+}
+
+a.useremail {
+  font-size: 20px;
+  background-color: beige;
+  color: #716f6f;
+  text-decoration: none;
+}
+
+a.useremail:hover {
+  color: cornflowerblue;
+}
+
+.Search-input {
+  width: 100%; /* 讓輸入框佔滿容器寬度 */
+  height: 3rem; /* 設定固定高度 */
+  padding: 0 3rem; /* 右側內邊距預留空間給按鈕 */
+  box-sizing: border-box; /* 包含 padding 和 border 在寬度計算中 */
+  background-color: white;
+  border: none;
+  border-radius: 4px; /* 可選：增加圓角效果 */
+}
+
+.search-button {
+  position: absolute; /* 設定按鈕為絕對定位 */
+  right: 0; /* 將按鈕置於容器的右側 */
+  width: 6rem; /* 設定固定寬度 */
+  height: 3rem; /* 設定固定高度 */
+  font-size: 25px;
+  background-color: white;
+  cursor: pointer;
+  border: none;
+}
+
+.search-button:hover {
+  color: #ffffff;
+  background-color: #a79898;
+}
+
+.search-button::before {
+  content: ""; /* 生成伪元素 */
+  position: absolute; /* 絕對定位，與父元素相對 */
+  left: 0; /* 定位於按鈕的最左側 */
+  top: 25%; /* 控制線條的起始位置（按鈕高度的 25%） */
+  bottom: 25%; /* 控制線條的結束位置（按鈕高度的 75%） */
+  width: 1px; /* 線條的寬度 */
+  background-color: rgb(221, 216, 216); /* 線條顏色 */
+}
+
+.icon {
+  width: 6.5rem;
+  height: 8rem;
+  background-color: beige;
+}
+
+.nav-buttons {
+  cursor: pointer;
+  width: 100px;
+  height: 50px;
+  border-radius: 35px;
+  border: solid 0.3px black;
+  background-color: #f58c66;
+  font-size: 20px;
+}
+.nav-cart {
+  width: 50px;
+  background-color: beige;
+}
+
+.action-links li {
+  background-color: beige;
+}
+
+ul {
+  /* 取消ul預設的內縮及樣式 */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/*下拉式選單*/
+
+.drop-down-menu {
+  width: 50rem;
+  font-size: 25px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+/*控制下拉式選單在移動網頁時固定在上方*/
+.fixed {
+  position: fixed;
+  top: 0;
+  width: 50rem;
+  z-index: 1; /* 確保下拉式選單在其他內容上方 */
+}
+.absolute {
+  position: absolute;
+  top: 55px;
+  left: 200px;
+  /* 或你需要的初始位置 */
+}
+
+.drop-down-menu li {
+  width: 10rem;
+  white-space: nowrap;
+}
+
+.drop-down-menu > li:last-child {
+  border-right: none;
+}
+
+.drop-down-menu > li {
+  float: left; /* 只有第一層是靠左對齊*/
+}
+
+.drop-down-menu a {
+  background-color: rgb(211, 211, 190);
+  color: #333;
+  display: block;
+  padding: 0 30px;
+  text-decoration: none;
+  line-height: 40px;
+}
+
+ul.drop-down-menu li a.border-line {
+  border: 0.1px solid #716f6f;
+}
+
+a.border-bottom-line {
+  border-bottom: 1px solid #b8b5b5;
+}
+
+.quantity-button {
+  flex: 0 0 auto; /* 按鈕不擴展，不收縮 */
+  width: 40px; /* 按鈕寬度 */
+  height: 40px; /* 按鈕高度 */
+  margin: 0 10px; /* 按鈕與數字之間的間距 */
+  padding: 0; /* 去除按鈕內邊距 */
+  border: 1px solid #ccc;
+  background-color: #dddbdb;
+  text-align: center;
+  font-size: 18px;
+  cursor: pointer;
+}
+.quantity-number {
+  font-size: 18px; /* 數字字體大小 */
+  width: 40px; /* 數字區域寬度 */
+  text-align: center; /* 數字居中對齊 */
+}
+
+ul.drop-down-menu a:hover {
+  /* 滑鼠滑入按鈕變色*/
+  background-color: #ef5c28;
+  color: #fff;
+}
+ul.drop-down-menu li:hover > a {
+  /* 滑鼠移入次選單上層按鈕保持變色*/
+  background-color: #ef5c28;
+  color: #fff;
+}
+
+ul.drop-down-menu ul {
+  /*隱藏次選單*/
+  display: none;
+}
+
+ul.drop-down-menu li:hover > ul {
+  /* 滑鼠滑入展開次選單*/
+  display: block;
+}
+
+/*商品表格*/
+
+.product-grid-container {
+  overflow: auto;
+  display: flex;
+  justify-content: center; /* 水平置中 */
+  min-height: 100vh; /* 設置容器高度，讓它占滿視窗高度 */
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 每行顯示 4 個項目 */
+  gap: 20px; /* 控制項目之間的間距 */
+  padding: 20px; /* 控制內邊距 */
+  width: 1200px;
+  max-height: 400px;
+}
+
+.product-item {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  background-color: rgb(211, 211, 188);
+}
+
+.product-img {
+  width: 100%;
+  height: auto;
+}
+
+.product-name {
+  font-weight: bold;
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+.product-border-container {
+  border: 1px solid #333;
+}
+
+.add-button {
+  margin-top: 10px;
+  padding: 8px 30px;
+  border-radius: 3px;
+  box-shadow: 0px 0px 12px -2px rgba(0, 0, 0, 0.5);
+  background: #fc6e51;
+  user-select: none;
+  color: white;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+}
+
+.product-price {
+  font-size: 14px;
+  color: #333;
+}
+
+.money-red {
+  color: red;
+}
+
+/*左右下背景*/
+
+.left-background {
+  background-color: rgba(169, 169, 126, 0.264);
+  width: 10%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.right-background {
+  background-color: rgba(169, 169, 126, 0.264);
+  width: 10%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
+/*註冊頁面*/
+.RegisterPage {
+  width: 18.6rem;
+  margin: 10rem 30rem;
+}
+
+.register-input {
+  padding: 10px;
+  font-size: 30px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  width: 300%; /* 使输入框宽度占满其容器 */
+  height: 50px;
+  border: solid 0.3px black;
+  border-radius: 35px;
+  background-color: #fff;
+
+  outline: none;
+}
+
+.register-button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 56rem;
+  position: relative;
+  z-index: 1;
+}
+.register-button {
+  cursor: pointer;
+  width: 100px;
+  height: 50px;
+  border-radius: 35px;
+  border: solid 0.3px black;
+  background-color: #f58c66;
+  font-size: 20px;
+}
+
+/*登入頁面*/
+.login-input {
+  padding: 10px;
+  font-size: 30px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  width: 300%; /* 使输入框宽度占满其容器 */
+  height: 50px;
+  border: solid 0.3px black;
+  border-radius: 35px;
+  background-color: #fff;
+
+  outline: none;
+}
+
+.login-button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 56rem;
+  position: relative;
+  z-index: 1;
+}
+.login-button {
+  cursor: pointer;
+  width: 100px;
+  height: 50px;
+  border-radius: 35px;
+  border: solid 0.3px black;
+  background-color: #f58c66;
+  font-size: 20px;
+}
+
+/*購物車頁面*/
+.cart h1 {
+  font-size: 3rem;
+  margin-left: 10%;
+}
+
+.cart-back {
+  width: 70px;
+  font-size: 50px;
+  margin-left: 10%;
+  background-color: #e8b6a4;
+  cursor: pointer;
+  border-radius: 100%;
+}
+
+.cart-table {
+  margin: 0 auto;
+  border-collapse: collapse; /* 使表格邊框合併 */
+}
+
+.cart-table tr,
+td {
+  text-align: center;
+  padding: 20px;
+}
+
+.cart-table img {
+  width: 20%;
+}
+
+.quantity-container {
+  display: flex; /* 使用 Flexbox 來排列子項目 */
+  align-items: center; /* 垂直居中對齊子項目 */
+  justify-content: center; /* 水平居中對齊子項目（可選） */
+}
+
+.cart-total {
+  text-align: right;
+  font-size: 25px;
+}
+.total-amount-container {
+  display: flex;
+}
+
+.total-amount-container p {
+  margin-right: 20px; /* 控制金額和按鈕之間的間距 */
+}
+.delete-button {
+  width: 3rem;
+  height: 3rem;
+  background-color: rgba(255, 0, 0, 0.493);
+  border-radius: 40%;
+}
+
+.place-order-button {
+  width: 10rem;
+  height: 3rem;
+  font-size: 20px;
+  background-color: #e08564af;
+  border-radius: 10%;
+}
+
+.place-order-button:active {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.delivery-container {
+  background-color: #333;
+}
+/*寄送方式*/
+.delivery-tr {
+  border-top: 1px solid black; /* 上邊線 */
+  border-bottom: 1px solid black; /* 下邊線 */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.delivery-button {
+  width: 100px;
+  height: 50px;
+  border: 1px solid #979494;
+  background-color: #e8b6a4;
+  border-radius: 10%;
+  cursor: pointer;
+}
+.delivery-button.active {
+  background-color: #a18379;
+  color: white;
+}
+
+/*沒登入的購物車顯示內容*/
+.cart-p {
+  font-size: 50px;
+  display: flex;
+  justify-content: center; /* 水平置中 */
+}
+
+/*下訂單頁面*/
+
+.checkout {
+  font-size: 20px;
+  width: 80%;
+  margin: 0 auto;
+
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), transparent);
+}
+
+.checkout-recipient-input {
+  padding: 15px;
+  width: 30rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: rgb(255, 255, 255);
+}
+
+.checkout-address-input {
+  padding: 15px;
+  width: 65rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: rgb(255, 255, 255);
+}
+.checkout-recipient-label {
+  margin: 10px;
+}
+.position-wrapper {
+  position: relative;
+  height: 4rem;
+  width: 80%;
+  margin: auto;
+}
+.position-wrapper tabel {
+  position: absolute;
+  right: 5rem;
+}
+
+.total-price {
+  display: flex;
+}
+
+.position-wrapper button {
+  width: 6rem;
+  height: 2.5rem;
+  background: #dbac9b;
+  border-radius: 10%;
+}
+
+.confirm-order {
+  width: 150px;
+  height: 50px;
+  font-size: 20px;
+  border: 1px solid red;
+  border-radius: 10%;
+  background-color: #e88d6c;
+}
+.confirm-order:active {
+  background-color: #a85739;
+  color: white;
+}
+
+.confirm-order-container {
+  text-align: right;
+  margin-right: 120px;
+}
+
+.deliverymethod-container {
+  margin-left: 4rem;
+}
+
+.deliverymethod-address-input {
+  padding: 15px;
+  width: 45rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: rgb(255, 255, 255);
+}
+.storepickup-price-container-div {
+  width: 60rem;
+  text-align: right;
+}
+
+.homeDelivery-price-container-div {
+  margin-left: 13px;
+}
+
+.price-container-td div {
+  padding: 1px;
+}
+
+.total-amount {
+  color: red;
+}
+
+.use-coupon-btn {
+  background-color: rgb(250, 250, 223);
+  border: 1px solid rgb(147, 142, 142);
+  border-radius: 10%;
+  font-size: 15px;
+  width: 50px;
+  height: 85px;
+  writing-mode: vertical-rl;
+  cursor: pointer;
+}
+
+/*選擇優惠券彈出視窗*/
+.coupon-modal-container {
+  position: fixed;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  border: 1px solid black;
+  background-color: beige;
+  width: 600px;
+  height: 500px;
+}
+
+.coupon-modal-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(186, 186, 157);
+  height: 40px;
+}
+
+.coupon-modal-container table {
+  display: flex;
+  justify-content: center;
+}
+
+.coupon-modal-container td {
+  padding: 10px;
+}
+
+.coupon-modal-select-btn {
+  box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.2);
+  height: 104px;
+  cursor: pointer;
+  border: none;
+}
+.coupon-modal-select-btn-active {
+  box-shadow: 2px 5px 20px rgba(0, 0, 0, 0.5); /* 鼠標懸停時的陰影效果 */
+  border: none;
+  cursor: pointer;
+}
+
+.coupon-modal-bottom {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+.coupon-modal-bottom button {
+  height: 50px;
+  width: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+.coupon-modal-img {
+  height: 101px;
+}
+
+.use-coupon-btn:hover {
+  background-color: rgb(212, 212, 188);
+}
+
+.coupon-modal-cancel {
+  background-color: rgb(177, 177, 161);
+}
+
+.coupon-modal-cancel:hover {
+  background-color: rgb(192, 192, 175);
+}
+
+/*個人資料頁面*/
+
+.profile-container {
+  position: relative;
+  height: 70vh;
+}
+
+.center-background {
+  position: absolute;
+  top: 2.5rem;
+  left: 25rem;
+  width: 70rem;
+  height: 35rem;
+  background-color: rgb(253, 253, 221);
+  overflow: auto;
+}
+
+.profile-title {
+  position: relative;
+  margin-left: 50px;
+  margin-top: 20px;
+  background-color: rgb(253, 253, 221);
+  font-size: 30px;
+}
+.profile-title:before {
+  content: "";
+  position: absolute;
+  top: 45px;
+  left: 0%;
+  width: 95%; /* 設置邊線的長度 */
+  border: 0.5px solid rgba(224, 205, 205, 0.633); /* 設置邊線 */
+}
+
+.profile-table {
+  position: absolute;
+  top: 80px;
+  left: 30px;
+}
+
+.profile-table,
+.profile-table td {
+  background-color: rgb(253, 253, 221);
+}
+
+.profile-table td {
+  font-size: px;
+  text-align: left;
+  color: #a0a0a0;
+}
+
+.profile-menu-container {
+  height: 560px;
+  border-left: 1px solid #c3bcbc;
+  position: absolute;
+  top: 40px;
+  left: 100px;
+}
+
+.profile-table p {
+  background-color: rgb(253, 253, 221);
+}
+
+.profile-email-button {
+  position: absolute;
+  border: none;
+  border-radius: 20px;
+  width: 50px;
+  height: 30px;
+  left: 350px;
+  top: 80px;
+}
+.profile-phone-button {
+  position: absolute;
+  border: none;
+  border-radius: 20px;
+  width: 50px;
+  height: 30px;
+  left: 350px;
+  top: 140px;
+}
+
+/*個人檔案下拉式選單*/
+
+.menu {
+  width: 300px;
+  list-style-type: none;
+}
+
+.drop-down {
+  position: relative;
+}
+
+.submenu-item {
+  display: block;
+  height: 0px;
+  overflow: hidden;
+  transition: height 0.5s ease;
+}
+
+.drop-down:hover .submenu-item {
+  overflow: visible;
+  height: 30px;
+}
+
+.item {
+  width: 100%;
+  padding: 10px;
+  display: inline-block;
+  text-decoration: none;
+  color: #666;
+}
+.item:hover {
+  background: #ddd;
+}
+.submenu-item {
+  background: #9f9c9c;
+  color: #eee;
+  width: 100%;
+  padding-left: 20px;
+  line-height: 30px;
+  text-decoration: none;
+}
+.submenu-item:hover {
+  background: #979494;
+}
+
+/*購買清單頁面*/
+
+.order-table {
+  border-collapse: collapse;
+  position: absolute;
+  top: 80px;
+  left: 55px;
+  width: 90%;
+}
+
+.order-table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid rgb(143, 141, 141);
+}
+
+.order-action-button div {
+  text-align: center;
+}
+.order-edit-button {
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+}
+.order-edit-button:hover {
+  background-color: rgb(173, 163, 163);
+}
+
+.order-number-button {
+  font-size: 15px;
+  cursor: pointer;
+  color: rgb(123, 123, 222);
+  border: none;
+}
+
+/*修改個人資料頁面*/
+.orderupdate-table {
+  border-collapse: collapse;
+  position: absolute;
+  top: 80px;
+  left: 55px;
+  width: 90%;
+}
+.orderupdate-table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid rgb(143, 141, 141);
+}
+.orderupdate-input {
+  background-color: white;
+  border: none;
+  padding: 10px;
+  width: 80%;
+  height: 35px;
+}
+.orderupdate-input:focus {
+  outline: none;
+}
+
+.orderupdate-td {
+  width: 200px;
+}
+
+.orderupdate-save {
+  position: absolute;
+  border-radius: 10%;
+  left: 83%;
+  top: 55%;
+  width: 130px;
+  height: 50px;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: rgb(215, 215, 191);
+}
+.orderupdate-save:active {
+  background-color: rgb(133, 133, 111);
+}
+
+/*訂單明細*/
+.detail-title {
+  position: relative;
+  margin-left: 50px;
+  margin-top: 20px;
+  background-color: rgb(253, 253, 221);
+  font-size: 30px;
+}
+
+.detail-table {
+  border-collapse: collapse;
+  position: absolute;
+  top: 80px;
+  left: 55px;
+  width: 90%;
+}
+.detail-table td {
+  padding: 8px; /* 設置內邊距，使內容不緊貼邊框 */
+  text-align: left; /* 設置文字對齊方式 */
+  border-bottom: 1px solid rgb(143, 141, 141);
+}
+.item-info-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.detail-img {
+  width: 100px;
+}
+
+.divider {
+  height: 1rem;
+  background-color: rgb(253, 253, 221);
+}
+.divider h1 {
+  background-color: rgb(253, 253, 221);
+}
+
+/*新增優惠券頁面*/
+.addPage-container {
+  background-color: rgb(253, 253, 221);
+}
+.addPage-label {
+  background-color: rgb(253, 253, 221);
+  font-size: 20px;
+}
+.addPage-input {
+  background-color: white;
+  height: 40px;
+  width: 300px;
+  padding: 10px;
+}
+
+.create-btn {
+  background-color: rgb(206, 206, 175);
+  width: 300px;
+  height: 40px;
+  font-size: 20px;
+  margin-left: 100px;
+}
+.create-coupon:active {
+  background-color: rgb(158, 158, 136);
+}
+
+/*領取優惠券頁面*/
+
+.coupon-claim {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+.claim-button {
+  width: 10rem;
+  height: 10rem;
+  font-size: 40px;
+  cursor: pointer;
+  background-color: #ef5c28;
+  border-style: none;
+}
+
+.coupon-backbutton {
+  margin: 1rem 0rem 0rem 13rem;
+  width: 5rem;
+  height: 5rem;
+  font-size: 18px;
+  background-color: #f58c66;
+  border-radius: 30%;
+}
+
+/*變更電子郵件,手機號碼頁面*/
+.email-change-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 水平居中 */
+  justify-content: center; /* 垂直居中 */
+  height: 60vh;
+}
+
+.change-label {
+  background-color: rgb(253, 253, 221);
+  font-size: 25px;
+}
+.change-input {
+  background-color: white;
+  width: 400px;
+  height: 45px;
+  border: 1px solid rgb(17, 13, 13);
+  padding: 10px;
+}
+
+.change-save {
+  width: 150px;
+  height: 45px;
+  font-size: 20px;
+  border: none;
+  border-radius: 5%;
+  position: absolute;
+  left: 237px;
+  cursor: pointer;
+  background-color: rgba(167, 167, 142, 0.548);
+}
+.email-change-save {
+  width: 150px;
+  height: 45px;
+  font-size: 20px;
+  border: none;
+  border-radius: 5%;
+  position: absolute;
+  left: 195px;
+  cursor: pointer;
+  background-color: rgba(167, 167, 142, 0.548);
+}
+
+.password-change-save {
+  width: 150px;
+  height: 45px;
+  font-size: 20px;
+  border: none;
+  border-radius: 5%;
+  position: absolute;
+  left: 162px;
+  cursor: pointer;
+  background-color: rgba(167, 167, 142, 0.548);
+}
+
+.change-save:hover {
+  background-color: rgba(96, 96, 82, 0.548);
+}
+
+/*密碼確認頁面*/
+
+.passwordcheck-container {
+  width: 500px;
+  height: 300px;
+  background-color: rgb(255, 255, 255);
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%);
+  box-shadow: 0px 0px 20px 1px rgba(161, 161, 184, 0.5);
+}
+
+.passwordcheck-back-button {
+  position: absolute;
+  top: 4px;
+  left: 15px;
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+  border: none;
+  color: #979494;
+  background-color: white;
+}
+
+.passwordcheck-container p {
+  position: absolute;
+  background-color: white;
+  left: 160px;
+  top: 40px;
+  font-size: 25px;
+}
+
+.passwordcheck-input {
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  width: 300px;
+  height: 45px;
+  padding: 10px;
+  border: 1px solid rgb(174, 172, 172);
+  background-color: white;
+}
+
+.passwordcheck-input:focus {
+  outline: 1px solid #d6d2d2; /* 設定自定義的外框樣式 */
+}
+
+.passwordcheck-button {
+  position: absolute;
+  top: 180px;
+  left: 100px;
+  width: 300px;
+  height: 45px;
+  font-size: 15px;
+  border: none;
+  background-color: rgb(209, 209, 171);
+}
+
+.passwordcheck-button:hover {
+  background-color: rgb(176, 176, 144);
+}
+
+/*我的優惠券頁面*/
+.content {
+  display: flex;
+  align-items: center;
+  background-color: rgb(253, 253, 221);
+}
+
+.text-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  background-color: rgb(253, 253, 221);
+}
+.text-content button {
+  margin-top: 10px;
+  border: 1px solid rgb(227, 162, 149);
+  border-radius: 10px;
+  width: 60px;
+  height: 40px;
+  background-color: rgb(223, 223, 181);
+  cursor: pointer;
+  box-shadow: 0px 0px 5px 1px rgba(162, 162, 183, 0.5);
+}
+.text-content button:active {
+  background-color: rgb(180, 180, 144);
+}
+
+.coupon-td {
+  padding: 0px;
+  border: 1px solid #d7d5d5;
+  box-shadow: 0px 0px 10px 1px rgba(162, 162, 183, 0.5);
+}
+.coupon-img {
+  width: 500px;
+  height: 100px;
+}
+
+.no-coupons-message {
+  font-size: 40px;
+}
+
+/*完成訂購頁面*/
+
+.circle-container {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+}
+.placeorder-text {
+  font-size: 40px;
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  transform: translate(-50%, -50%);
+  animation: revealCircle 2s ease-in-out forwards;
+}
+.checkmark {
+  font-size: 50px;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  animation: revealCircle 2s ease-in-out forwards;
+}
+
+.circle {
+  border: 4px solid #4caf50;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0; /* 初始透明 */
+  animation: revealCircle 2s ease-in-out forwards;
+}
+
+.circle p {
+  position: absolute;
+}
+
+/* 定義動畫 */
+@keyframes revealCircle {
+  0% {
+    opacity: 0; /* 動畫開始時完全透明 */
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+    opacity: 1; /* 動畫結束時完全顯示 */
   }
 }
