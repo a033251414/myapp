@@ -1,25 +1,25 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-const Chewinggum = ({ isLoggedIn, setQuantity }) => {
+const Chewinggum = ({ isLoggedIn, setCartQuantity }) => {
   const products = [
     {
       name: "飛壘無糖口香糖",
-      imgSrc: "/零食/糖果/口香糖/飛壘無糖口香糖60.9gx1入(葡萄口味35$).png",
+      imgSrc: "/myapp/零食/糖果/口香糖/飛壘無糖口香糖60.9gx1入(葡萄口味35$).png",
       price: 35,
     },
     {
       name: "野崎製果超長口香糖",
-      imgSrc: "/零食/糖果/口香糖/野崎製果超長口香糖(55g45$).png",
+      imgSrc: "/myapp/零食/糖果/口香糖/野崎製果超長口香糖(55g45$).png",
       price: 45,
     },
     {
       name: "葡萄風味口香糖",
-      imgSrc: "/零食/糖果/口香糖/葡萄風味口香糖(47g49$).png",
+      imgSrc: "/myapp/零食/糖果/口香糖/葡萄風味口香糖(47g49$).png",
       price: 49,
     },
     {
       name: "潔淨無糖口香糖",
-      imgSrc: "/零食/糖果/口香糖/潔淨無糖口香糖(28g5入139$).png",
+      imgSrc: "/myapp/零食/糖果/口香糖/潔淨無糖口香糖(28g5入139$).png",
       price: 139,
     },
   ];
@@ -27,12 +27,18 @@ const Chewinggum = ({ isLoggedIn, setQuantity }) => {
 
   const addToCart = (product) => {
     if (isLoggedIn) {
-      setQuantity((prevQuantity) => prevQuantity + 1);
-
       const username = localStorage.getItem("username");
       const cartKey = `cartItems_${username}`;
-
       let existingCart = [];
+
+      /*增加購物車圖示數量*/
+
+      const CartQuantityKey = `CartQuantity_${username}`;
+      let cartQuantity = localStorage.getItem(CartQuantityKey);
+      cartQuantity = cartQuantity ? parseInt(cartQuantity, 10) : 0;
+      const newQuantity = cartQuantity + 1;
+      localStorage.setItem(CartQuantityKey, newQuantity);
+      setCartQuantity(newQuantity);
 
       try {
         const storedCartItems = localStorage.getItem(cartKey);
@@ -51,13 +57,12 @@ const Chewinggum = ({ isLoggedIn, setQuantity }) => {
         // 如果商品不存在，添加商品並設置數量為 1
         existingCart.push({ ...product, quantity: 1 });
       }
+      alert("加入購物車成功");
       // 儲存更新後的購物車
       localStorage.setItem(cartKey, JSON.stringify(existingCart));
-
-      // existingCart.push(product);
     } else {
       alert("請先登入帳號");
-      navigate("/Login");
+      navigate("/myapp/login");
     }
   };
 

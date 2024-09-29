@@ -7,13 +7,13 @@ const Coupon = ({ isLoggedIn }) => {
   const [coupons, setCoupons] = useState([]);
 
   const handleBack = () => {
-    navigate("/");
+    navigate("/myapp");
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/coupon");
+        const response = await axios.get("https://myapp1-test-3490f09779f0.herokuapp.com/coupon");
         setCoupons(response.data);
         console.log(response.data);
       } catch (error) {
@@ -27,7 +27,7 @@ const Coupon = ({ isLoggedIn }) => {
     const token = localStorage.getItem("token");
     try {
       await axios.post(
-        "http://localhost:8080/coupon",
+        "https://myapp1-test-3490f09779f0.herokuapp.com/coupon",
         { couponId, usageLimit },
         {
           headers: {
@@ -48,25 +48,25 @@ const Coupon = ({ isLoggedIn }) => {
 
   const CouponImg = ({ discountAmount }) => {
     if (discountAmount === 60) {
-      return <img src="/免運券.png" alt="優惠券"></img>;
+      return <img className="coupon-claim-img" src="/myapp/免運券.png" alt="優惠券"></img>;
     }
     return null;
   };
 
   return (
     <div className="coupon-container">
-      <button onClick={handleBack} className="coupon-backbutton">
+      <button onClick={handleBack} className="coupon-back-btn">
         返回首頁
       </button>
       {coupons.map((coupon) => (
-        <div key={coupon.id} className="coupon-claim">
+        <div key={coupon.id} className="coupon-claim-container">
           <CouponImg discountAmount={coupon.discountAmount} />
 
           <button
             onClick={() => handleGetCoupon(coupon._id, coupon.usageLimit)}
             className="claim-button"
           >
-            領取
+            <p>領取</p>
           </button>
         </div>
       ))}

@@ -6,37 +6,37 @@ const HomePage = () => {
   const recommend = [
     {
       name: "多力多滋醬烤豬五花",
-      imgSrc: "/零食/餅乾/洋芋片/多力多滋醬烤豬五花.png",
+      imgSrc: "/myapp/零食/餅乾/洋芋片/多力多滋醬烤豬五花.png",
       price: 35,
     },
     {
       name: "多力多滋爆蒜鮮蝦口味",
-      imgSrc: "/零食/餅乾/洋芋片/多力多滋爆蒜鮮蝦口味.png",
+      imgSrc: "/myapp/零食/餅乾/洋芋片/多力多滋爆蒜鮮蝦口味.png",
       price: 35,
     },
     {
       name: "奇多北海道奶油玉米風味玉米棒",
-      imgSrc: "/零食/餅乾/洋芋片/奇多北海道奶油玉米風味玉米棒.png",
+      imgSrc: "/myapp/零食/餅乾/洋芋片/奇多北海道奶油玉米風味玉米棒.png",
       price: 35,
     },
     {
       name: "美國Ruffles波樂 厚切洋芋片-香蔥",
-      imgSrc: "/零食/餅乾/洋芋片/美國Ruffles波樂 厚切洋芋片-香蔥.png",
+      imgSrc: "/myapp/零食/餅乾/洋芋片/美國Ruffles波樂 厚切洋芋片-香蔥.png",
       price: 35,
     },
     {
       name: "樂事九州岩燒海苔",
-      imgSrc: "/零食/餅乾/洋芋片/樂事九州岩燒海苔.png",
+      imgSrc: "/myapp/零食/餅乾/洋芋片/樂事九州岩燒海苔.png",
       price: 35,
     },
     {
       name: "樂事九州岩燒海苔",
-      imgSrc: "/零食/餅乾/洋芋片/樂事九州岩燒海苔.png",
+      imgSrc: "/myapp/零食/餅乾/洋芋片/樂事九州岩燒海苔.png",
       price: 35,
     },
     {
       name: "樂事九州岩燒海苔",
-      imgSrc: "/零食/餅乾/洋芋片/樂事九州岩燒海苔.png",
+      imgSrc: "/myapp/零食/餅乾/洋芋片/樂事九州岩燒海苔.png",
       price: 35,
     },
   ];
@@ -53,19 +53,17 @@ const HomePage = () => {
 
   return (
     <div className="carousel">
-      <p>推薦熱門</p>
       <Slider {...settings}>
         {recommend.map((item, index) => (
           <div key={index}>
-            <a href="#">
-              <img className="recommend-img" src={item.imgSrc} alt={item.name} />
-            </a>
+            <img className="recommend-img" src={item.imgSrc} alt={item.name} />
           </div>
         ))}
       </Slider>
+
       <div>
-        <Link to="/coupon">
-          <img className="coupon-icon" src="./限時優惠券.png" alt="優惠券" />
+        <Link to="/myapp/coupon">
+          <img className="coupon-icon" src="myapp/限時優惠券.png" alt="優惠券" />
         </Link>
       </div>
     </div>

@@ -1,45 +1,45 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-const Gummy = ({ isLoggedIn, setQuantity }) => {
+const Gummy = ({ isLoggedIn, setCartQuantity }) => {
   const products = [
     {
       name: "比菲多軟糖葡萄",
-      imgSrc: "/零食/糖果/軟糖/比菲多軟糖葡萄(75g53$).png",
+      imgSrc: "/myapp/零食/糖果/軟糖/比菲多軟糖葡萄(75g53$).png",
       price: 53,
     },
     {
       name: "原始風味益生菌軟糖",
-      imgSrc: "/零食/糖果/軟糖/原始風味益生菌軟糖(90g53$).png",
+      imgSrc: "/myapp/零食/糖果/軟糖/原始風味益生菌軟糖(90g53$).png",
       price: 53,
     },
     {
       name: "偉特軟糖",
-      imgSrc: "/零食/糖果/軟糖/偉特軟糖(80g67$).png",
+      imgSrc: "/myapp/零食/糖果/軟糖/偉特軟糖(80g67$).png",
       price: 67,
     },
     {
       name: "夢之梅糖",
-      imgSrc: "/零食/糖果/軟糖/夢之梅糖(100g42$).png",
+      imgSrc: "/myapp/零食/糖果/軟糖/夢之梅糖(100g42$).png",
       price: 42,
     },
     {
       name: "酷露露Q糖-白葡萄味",
-      imgSrc: "/零食/糖果/軟糖/酷露露Q糖-白葡萄味(48g55$).png",
+      imgSrc: "/myapp/零食/糖果/軟糖/酷露露Q糖-白葡萄味(48g55$).png",
       price: 55,
     },
     {
       name: "酸Q熊軟糖",
-      imgSrc: "/零食/糖果/軟糖/酸Q熊軟糖(220g215$).png",
+      imgSrc: "/myapp/零食/糖果/軟糖/酸Q熊軟糖(220g215$).png",
       price: 215,
     },
     {
       name: "寶吉果汁QQ糖葡萄",
-      imgSrc: "/零食/糖果/軟糖/寶吉果汁QQ糖葡萄(176g包83$).png",
+      imgSrc: "/myapp/零食/糖果/軟糖/寶吉果汁QQ糖葡萄(176g包83$).png",
       price: 83,
     },
     {
       name: "QQ熱帶水果軟糖",
-      imgSrc: "/零食/糖果/軟糖/QQ熱帶水果軟糖(340g袋125$).png",
+      imgSrc: "/myapp/零食/糖果/軟糖/QQ熱帶水果軟糖(340g袋125$).png",
       price: 125,
     },
   ];
@@ -47,12 +47,18 @@ const Gummy = ({ isLoggedIn, setQuantity }) => {
 
   const addToCart = (product) => {
     if (isLoggedIn) {
-      setQuantity((prevQuantity) => prevQuantity + 1);
-
       const username = localStorage.getItem("username");
       const cartKey = `cartItems_${username}`;
-
       let existingCart = [];
+
+      /*增加購物車圖示數量*/
+
+      const CartQuantityKey = `CartQuantity_${username}`;
+      let cartQuantity = localStorage.getItem(CartQuantityKey);
+      cartQuantity = cartQuantity ? parseInt(cartQuantity, 10) : 0;
+      const newQuantity = cartQuantity + 1;
+      localStorage.setItem(CartQuantityKey, newQuantity);
+      setCartQuantity(newQuantity);
 
       try {
         const storedCartItems = localStorage.getItem(cartKey);
@@ -71,13 +77,12 @@ const Gummy = ({ isLoggedIn, setQuantity }) => {
         // 如果商品不存在，添加商品並設置數量為 1
         existingCart.push({ ...product, quantity: 1 });
       }
+      alert("加入購物車成功");
       // 儲存更新後的購物車
       localStorage.setItem(cartKey, JSON.stringify(existingCart));
-
-      // existingCart.push(product);
     } else {
       alert("請先登入帳號");
-      navigate("/Login");
+      navigate("/myapp/login");
     }
   };
 

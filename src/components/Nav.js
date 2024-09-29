@@ -2,14 +2,19 @@ import React, { useState, useEffect } from "react";
 import "../App.css";
 import { useNavigate, Link } from "react-router-dom";
 
-const Nav = ({ setIsLoggedIn, isLoggedIn }) => {
-  const [isFixed, setIsFixed] = useState(false);
+const Nav = ({ setIsLoggedIn, isLoggedIn, cartQuantity, setCartQuantity }) => {
   const [useremail, setEmail] = useState(null);
+  const [isVisibleMenu, setIsVisibleMenu] = useState(false);
   const navigate = useNavigate();
-  const scrollThreshold = 110;
+
+  /*抓取購物車數量顯示*/
+  useEffect(() => {
+    const username = localStorage.getItem("username");
+    const CartQuantity = `CartQuantity_${username}`;
+    setCartQuantity(localStorage.getItem(CartQuantity));
+  });
 
   useEffect(() => {
-    // 檢查本地存儲中的 token
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
     if (token) {
@@ -18,31 +23,14 @@ const Nav = ({ setIsLoggedIn, isLoggedIn }) => {
     }
   }, [setIsLoggedIn]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      // 當滾動超過閾值時，選單固定在頁面頂部
-      if (scrollTop > scrollThreshold) {
-        setIsFixed(true);
-      } else {
-        setIsFixed(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    // 清理事件監聽器
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []); // 空依賴數組確保只在組件掛載和卸載時運行
-
   const handleRegister = () => {
-    navigate("/register");
+    navigate("/myapp/register");
   };
   const handleLogin = () => {
-    navigate("/login");
+    navigate("/myapp/login");
   };
   const handleCart = () => {
-    navigate("/Cart");
+    navigate("/myapp/cart");
   };
   const handleLogout = () => {
     localStorage.removeItem("username");
@@ -51,177 +39,313 @@ const Nav = ({ setIsLoggedIn, isLoggedIn }) => {
 
     setIsLoggedIn(false);
     setEmail("");
-    navigate("/");
+    navigate("/myapp");
   };
+
+  const handleVisbleMenu = () => {
+    setIsVisibleMenu(!isVisibleMenu);
+  };
+
+  const handleClick = () => {
+    setIsVisibleMenu(!isVisibleMenu);
+  };
+
   return (
     <div>
       <nav className="navbar">
         <div className="left">
-          <Link to="/">
-            <img className="icon" src="/icon/icon.png" alt="Icon" />
+          <Link to="/myapp">
+            <img className="icon" src="/myapp/icon/icon.png" alt="Icon" />
           </Link>
         </div>
 
         <div className="center">
-          <input className="Search-input" type="text" placeholder="搜尋"></input>
-          <button className="search-button">搜尋</button>
-
-          <ul className={`drop-down-menu ${isFixed ? "fixed" : "absolute"}`}>
-            <li>
-              <Link className="border-line" to="/">
-                首頁
-              </Link>
-            </li>
-            <li>
-              <Link className="border-line" to="/cookie">
-                餅乾
-              </Link>
-              <ul className="border-bottom-line">
-                <li>
-                  <Link className="border-bottom-line" to="crisps">
-                    洋芋片
-                  </Link>
-                </li>
-                <li>
-                  <Link className="border-bottom-line" to="/sodacracker">
-                    蘇打餅
-                  </Link>
-                </li>
-                <li>
-                  <Link className="border-bottom-line" to="/sandwichcookie">
-                    夾心餅
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/eggroll">蛋捲</Link>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <Link className="border-line" to="/candy">
-                糖果
-              </Link>
-              <ul className="border-bottom-line">
-                <li>
-                  <Link className="border-bottom-line" to="/chewinggum">
-                    口香糖
-                  </Link>
-                </li>
-                <li>
-                  <Link className="border-bottom-line" to="/caramel">
-                    牛奶糖
-                  </Link>
-                </li>
-                <li>
-                  <Link className="border-bottom-line" to="throatlozenge">
-                    喉糖
-                  </Link>
-                </li>
-                <li>
-                  <Link to="gummy">軟糖</Link>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <Link className="border-line" to="/driedfruits">
-                果乾
-              </Link>
-              <ul className="border-bottom-line">
-                <li>
-                  <Link className="border-bottom-line" to="/driedpineapple">
-                    鳳梨乾
-                  </Link>
-                </li>
-                <li>
-                  <Link className="border-bottom-line" to="raisin">
-                    葡萄乾
-                  </Link>
-                </li>
-                <li>
-                  <Link className="border-bottom-line" to="/driedmango">
-                    芒果乾
-                  </Link>
-                </li>
-                <li>
-                  <Link to="Jujube">棗類</Link>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <Link className="border-line" to="/Nut">
-                堅果
-              </Link>
-              <ul>
-                <li>
-                  <Link className="border-bottom-line" to="/Almond">
-                    杏仁果
-                  </Link>
-                </li>
-                <li>
-                  <Link className="border-bottom-line" to="/Cashew">
-                    腰果
-                  </Link>
-                </li>
-                <li>
-                  <Link className="border-bottom-line" to="/Peanut">
-                    花生
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/Pistachio">開心果</Link>
-                </li>
-              </ul>
-            </li>
-          </ul>
+          <div className="drop-down-menu-container">
+            <ul className="drop-down-menu">
+              <li>
+                <Link className="border-line" to="/myapp">
+                  首頁
+                </Link>
+              </li>
+              <li>
+                <Link className="border-line" to="/myapp/cookie">
+                  餅乾
+                </Link>
+                <ul className="sub-menu">
+                  <li>
+                    <Link className="border-bottom-line" to="/myapp/crisps">
+                      洋芋片
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="border-bottom-line" to="/myapp/sodacracker">
+                      蘇打餅
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="border-bottom-line" to="/myapp/sandwichcookie">
+                      夾心餅
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/myapp/eggroll">蛋捲</Link>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <Link className="border-line" to="/myapp/candy">
+                  糖果
+                </Link>
+                <ul className="sub-menu">
+                  <li>
+                    <Link className="border-bottom-line" to="/myapp/chewinggum">
+                      口香糖
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="border-bottom-line" to="/myapp/caramel">
+                      牛奶糖
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="border-bottom-line" to="/myapp/throatlozenge">
+                      喉糖
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/myapp/gummy">軟糖</Link>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <Link className="border-line" to="/myapp/driedfruits">
+                  果乾
+                </Link>
+                <ul className="sub-menu">
+                  <li>
+                    <Link className="border-bottom-line" to="/myapp/driedpineapple">
+                      鳳梨乾
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="border-bottom-line" to="/myapp/raisin">
+                      葡萄乾
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="border-bottom-line" to="/myapp/driedmango">
+                      芒果乾
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/myapp/jujube">棗類</Link>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <Link className="border-line" to="/myapp/nut">
+                  堅果
+                </Link>
+                <ul className="sub-menu">
+                  <li>
+                    <Link className="border-bottom-line" to="/myapp/almond">
+                      杏仁果
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="border-bottom-line" to="/myapp/cashew">
+                      腰果
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="border-bottom-line" to="/myapp/peanut">
+                      花生
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/myapp/pistachio">開心果</Link>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
         </div>
-
-        <div className="right">
-          <Link to="/Profile" className="useremail">
-            {useremail}
-          </Link>
-
-          <ul className="action-links">
+        <div className="phone-drop-down-menu">
+          <button onClick={handleVisbleMenu} className="menu-btn">
+            <img className="phone-menu-icon" src="/myapp/MenuIcon.png"></img>
+          </button>
+          <nav className={`phone-menu-container ${isVisibleMenu ? "active" : ""}`}>
+            <div>
+              <ul className="phone-menu">
+                <li className="phone-itembox">
+                  <Link onClick={handleClick} className="phone-item" to="/myapp">
+                    <h1>首頁</h1>
+                  </Link>
+                </li>
+                <li className="phone-itembox phone-drop-down">
+                  <Link className="phone-item">
+                    <h1>餅乾</h1>
+                  </Link>
+                  <div className="phone-submenu">
+                    <Link onClick={handleClick} className="phone-submenu-item" to="/myapp/crisps">
+                      洋芋片
+                    </Link>
+                    <Link
+                      onClick={handleClick}
+                      className="phone-submenu-item"
+                      to="/myapp/sodacracker"
+                    >
+                      蘇打餅
+                    </Link>
+                    <Link
+                      onClick={handleClick}
+                      className="phone-submenu-item"
+                      to="/myapp/sandwichcookie"
+                    >
+                      夾心餅
+                    </Link>
+                    <Link onClick={handleClick} className="phone-submenu-item" to="/myapp/eggroll">
+                      蛋捲
+                    </Link>
+                  </div>
+                </li>
+                <li className="phone-itembox phone-drop-down">
+                  <Link className="phone-item">
+                    <h1>糖果</h1>
+                  </Link>
+                  <div className="phone-submenu">
+                    <Link
+                      onClick={handleClick}
+                      className="phone-submenu-item"
+                      to="/myapp/chewinggum"
+                    >
+                      口香糖
+                    </Link>
+                    <Link onClick={handleClick} className="phone-submenu-item" to="/myapp/caramel">
+                      牛奶糖
+                    </Link>
+                    <Link
+                      onClick={handleClick}
+                      className="phone-submenu-item"
+                      to="/myapp/throatlozenge"
+                    >
+                      喉糖
+                    </Link>
+                    <Link onClick={handleClick} className="phone-submenu-item" to="/myapp/gummy">
+                      軟糖
+                    </Link>
+                  </div>
+                </li>
+                <li className="phone-itembox phone-drop-down">
+                  <Link className="phone-item">
+                    <h1>果乾</h1>
+                  </Link>
+                  <div className="phone-submenu">
+                    <Link
+                      onClick={handleClick}
+                      className="phone-submenu-item"
+                      to="/myapp/driedpineapple"
+                    >
+                      鳳梨乾
+                    </Link>
+                    <Link onClick={handleClick} className="phone-submenu-item" to="/myapp/jujube">
+                      葡萄乾
+                    </Link>
+                    <Link
+                      onClick={handleClick}
+                      className="phone-submenu-item"
+                      to="/myapp/driedmango"
+                    >
+                      芒果乾
+                    </Link>
+                    <Link onClick={handleClick} className="phone-submenu-item" to="/myapp/raisin">
+                      棗類
+                    </Link>
+                  </div>
+                </li>
+                <li className="phone-itembox phone-drop-down">
+                  <Link className="phone-item">
+                    <h1>堅果</h1>
+                  </Link>
+                  <div className="phone-submenu">
+                    <Link onClick={handleClick} className="phone-submenu-item" to="/myapp/almond">
+                      杏仁果
+                    </Link>
+                    <Link onClick={handleClick} className="phone-submenu-item" to="/myapp/cashew">
+                      腰果
+                    </Link>
+                    <Link onClick={handleClick} className="phone-submenu-item" to="/myapp/peanut">
+                      花生
+                    </Link>
+                    <Link
+                      onClick={handleClick}
+                      className="phone-submenu-item"
+                      to="/myapp/pistachio"
+                    >
+                      開心果
+                    </Link>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+        <div className="nav-right">
+          <table className="nav-table">
             {isLoggedIn ? (
-              <>
-                <li>
-                  <button onClick={handleLogout} className="nav-buttons">
-                    登出
-                  </button>
-                </li>
-                <li>
-                  <img
-                    className="nav-cart"
-                    src="./Cart.png"
-                    onClick={handleCart}
-                    alt="購物車"
-                    role="button"
-                  />
-                </li>
-              </>
+              <tbody>
+                <tr>
+                  <td className="nav-td">
+                    <button onClick={() => navigate("/myapp/profile")} className="nav-to-profile">
+                      個人資料
+                    </button>
+                  </td>
+                  <td className="nav-td nav-actions">
+                    <button onClick={handleLogout} className="nav-buttons">
+                      登出
+                    </button>
+                    <div>
+                      <img
+                        className="nav-cart-icon"
+                        src="/myapp/icon/Cart.png"
+                        onClick={handleCart}
+                        alt="購物車"
+                        role="button"
+                      />
+                      <div className="cart-number">{cartQuantity}</div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
             ) : (
-              <>
-                <li>
-                  <button onClick={handleRegister} className="nav-buttons">
-                    註冊
-                  </button>
-                </li>
-                <li>
-                  <button onClick={handleLogin} className="nav-buttons">
-                    登入
-                  </button>
-                </li>
-                <li>
-                  <img
-                    className="nav-cart"
-                    src="./Cart.png"
-                    onClick={handleCart}
-                    alt="購物車"
-                    role="button"
-                  />
-                </li>
-              </>
+              <tbody>
+                <tr>
+                  <td className="nav-td">
+                    <button onClick={handleRegister} className="nav-register-buttons">
+                      註冊
+                    </button>
+                  </td>
+                  <td className="nav-td">
+                    <button onClick={handleLogin} className="nav-buttons">
+                      登入
+                    </button>
+                  </td>
+                  <td className="nav-td">
+                    <div className="nav-cart-container">
+                      <img
+                        className="nav-cart-icon"
+                        src="/myapp/icon/Cart.png"
+                        onClick={handleCart}
+                        alt="購物車"
+                        role="button"
+                      />
+                      <div className="cart-number">{cartQuantity}</div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
             )}
-          </ul>
+          </table>
         </div>
       </nav>
     </div>

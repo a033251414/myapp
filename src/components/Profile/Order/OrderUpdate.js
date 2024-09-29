@@ -11,14 +11,17 @@ const OrderUpdate = () => {
   const handleSave = async () => {
     if (recipientName && telUpdate && addressUpdate) {
       try {
-        const response = await axios.patch(`http://localhost:8080/orderupdate/${orderId}`, {
-          recipientName,
-          telUpdate,
-          addressUpdate,
-        });
+        const response = await axios.patch(
+          `https://myapp1-test-3490f09779f0.herokuapp.com/orderupdate/${orderId}`,
+          {
+            recipientName,
+            telUpdate,
+            addressUpdate,
+          }
+        );
         if (response.status === 204) {
           alert("資料修改成功");
-          navigate("/shoppinglist");
+          navigate("/myapp/shoppinglist");
         }
       } catch (err) {
         const errorMessage =
@@ -35,25 +38,25 @@ const OrderUpdate = () => {
       <div className="profile-menu-container">
         <ul className="menu">
           <li className="itembox drop-down">
-            <a className="item" href="/profile">
+            <a className="item" href="/myapp/profile">
               我的帳戶
             </a>
             <div className="submenu">
-              <a className="submenu-item" href="/profile">
+              <a className="submenu-item" href="/myapp/profile">
                 個人檔案
               </a>
-              <a className="submenu-item" href="/passwordcheck">
+              <a className="submenu-item" href="/myapp/passwordcheck">
                 更改密碼
               </a>
             </div>
           </li>
           <li className="itembox drop-down">
-            <a className="item" href="/shoppinglist">
+            <a className="item" href="/myapp/shoppinglist">
               購買清單
             </a>
           </li>
           <li className="itembox drop-down">
-            <a className="item" href="/mycoupons">
+            <a className="item" href="/myapp/mycoupons">
               我的優惠券
             </a>
           </li>
@@ -71,7 +74,6 @@ const OrderUpdate = () => {
             </tr>
           </thead>
           <tbody>
-            {" "}
             <tr>
               <td className="orderupdate-td">
                 <label forhtml="name-update">姓名：</label>
@@ -83,11 +85,12 @@ const OrderUpdate = () => {
                   className="orderupdate-input"
                   type="text"
                   id="name-update"
+                  placeholder="請輸入姓名"
                 ></input>
               </td>
             </tr>
             <tr>
-              <td>
+              <td className="orderupdate-td">
                 <label forhtml="tel-update">電話：</label>
               </td>
               <td>
@@ -97,11 +100,12 @@ const OrderUpdate = () => {
                   className="orderupdate-input"
                   type="tel"
                   id="tel-update"
+                  placeholder="請輸入電話"
                 ></input>
               </td>
             </tr>
             <tr>
-              <td>
+              <td className="orderupdate-td">
                 <label forhtml="address-update">取貨地址：</label>
               </td>
               <td>
@@ -111,6 +115,7 @@ const OrderUpdate = () => {
                   className="orderupdate-input"
                   type="text"
                   id="address-update"
+                  placeholder="請輸入取貨地址"
                 ></input>
               </td>
             </tr>

@@ -8,26 +8,28 @@ const Login = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate("/");
+    navigate("/myapp");
   };
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://localhost:8080/login", {
+      const response = await axios.post("https://myapp1-test-3490f09779f0.herokuapp.com/login", {
         email,
         password,
       });
 
       if (response.status === 200) {
         const { token, email } = response.data;
+
         console.log(response.data);
+
         localStorage.setItem("token", token);
         localStorage.setItem("username", email);
         localStorage.setItem("isLoggedIn", "true");
 
         setIsLoggedIn(true);
         alert("登入成功, 即將導向");
-        navigate("/");
+        navigate("/myapp");
         setEmail("");
         setPassword("");
       }
@@ -39,7 +41,7 @@ const Login = ({ setIsLoggedIn }) => {
   };
 
   return (
-    <div className="RegisterPage">
+    <div className="loginpage-container">
       <div className="form-group">
         <label htmlFor="Email">電子郵件：</label>
         <input
@@ -51,7 +53,7 @@ const Login = ({ setIsLoggedIn }) => {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="Password">密碼：</label>
+        <label htmlFor="Password">輸入密碼：</label>
         <input
           id="Password"
           type="password"

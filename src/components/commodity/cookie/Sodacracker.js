@@ -1,30 +1,30 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-const Sodacracker = ({ isLoggedIn, setQuantity }) => {
+const Sodacracker = ({ isLoggedIn, setCartQuantity }) => {
   const products = [
     {
       name: "天然取向紫菜蘇打餅",
-      imgSrc: "/零食/餅乾/蘇打餅/天然取向紫菜蘇打餅(300公克72$).png",
+      imgSrc: "/myapp/零食/餅乾/蘇打餅/天然取向紫菜蘇打餅(300公克72$).png",
       price: 72,
     },
     {
       name: "天然取向鮮蔥蘇打餅",
-      imgSrc: "/零食/餅乾/蘇打餅/天然取向鮮蔥蘇打餅(330公克72$).png",
+      imgSrc: "/myapp/零食/餅乾/蘇打餅/天然取向鮮蔥蘇打餅(330公克72$).png",
       price: 72,
     },
     {
       name: "多穀物黃金胚芽蘇打餅",
-      imgSrc: "/零食/餅乾/蘇打餅/多穀物黃金胚芽蘇打餅(180g盒50$).png",
+      imgSrc: "/myapp/零食/餅乾/蘇打餅/多穀物黃金胚芽蘇打餅(180g盒50$).png",
       price: 50,
     },
     {
       name: "海太營養餅",
-      imgSrc: "/零食/餅乾/蘇打餅/海太營養餅(197g63$).png",
+      imgSrc: "/myapp/零食/餅乾/蘇打餅/海太營養餅(197g63$).png",
       price: 63,
     },
     {
       name: "湘辣蘇打餅",
-      imgSrc: "/零食/餅乾/蘇打餅/湘辣蘇打餅(306g149$).png",
+      imgSrc: "/myapp/零食/餅乾/蘇打餅/湘辣蘇打餅(306g149$).png",
       price: 149,
     },
   ];
@@ -32,12 +32,18 @@ const Sodacracker = ({ isLoggedIn, setQuantity }) => {
 
   const addToCart = (product) => {
     if (isLoggedIn) {
-      setQuantity((prevQuantity) => prevQuantity + 1);
-
       const username = localStorage.getItem("username");
       const cartKey = `cartItems_${username}`;
-
       let existingCart = [];
+
+      /*增加購物車圖示數量*/
+
+      const CartQuantityKey = `CartQuantity_${username}`;
+      let cartQuantity = localStorage.getItem(CartQuantityKey);
+      cartQuantity = cartQuantity ? parseInt(cartQuantity, 10) : 0;
+      const newQuantity = cartQuantity + 1;
+      localStorage.setItem(CartQuantityKey, newQuantity);
+      setCartQuantity(newQuantity);
 
       try {
         const storedCartItems = localStorage.getItem(cartKey);
@@ -56,13 +62,12 @@ const Sodacracker = ({ isLoggedIn, setQuantity }) => {
         // 如果商品不存在，添加商品並設置數量為 1
         existingCart.push({ ...product, quantity: 1 });
       }
+      alert("加入購物車成功");
       // 儲存更新後的購物車
       localStorage.setItem(cartKey, JSON.stringify(existingCart));
-
-      // existingCart.push(product);
     } else {
       alert("請先登入帳號");
-      navigate("/Login");
+      navigate("/myapp/login");
     }
   };
 

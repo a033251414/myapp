@@ -1,30 +1,30 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-const Jujube = ({ isLoggedIn, setQuantity }) => {
+const Jujube = ({ isLoggedIn, setCartQuantity }) => {
   const products = [
     {
       name: "去籽蜜黑棗乾",
-      imgSrc: "/零食/果乾/棗類/去籽蜜黑棗乾(200gx1包211$).png",
+      imgSrc: "/myapp/零食/果乾/棗類/去籽蜜黑棗乾(200gx1包211$).png",
       price: 211,
     },
     {
       name: "若羌紅棗",
-      imgSrc: "/零食/果乾/棗類/若羌紅棗(300g99$).png",
+      imgSrc: "/myapp/零食/果乾/棗類/若羌紅棗(300g99$).png",
       price: 99,
     },
     {
       name: "若羌紅棗核桃",
-      imgSrc: "/零食/果乾/棗類/若羌紅棗核桃(150G169$).png",
+      imgSrc: "/myapp/零食/果乾/棗類/若羌紅棗核桃(150G169$).png",
       price: 169,
     },
     {
       name: "特級天然椰棗",
-      imgSrc: "/零食/果乾/棗類/特級天然椰棗(200g119$).png",
+      imgSrc: "/myapp/零食/果乾/棗類/特級天然椰棗(200g119$).png",
       price: 119,
     },
     {
       name: "蜜棗乾",
-      imgSrc: "/零食/果乾/棗類/蜜棗乾(250gx1包153$).png",
+      imgSrc: "/myapp/零食/果乾/棗類/蜜棗乾(250gx1包153$).png",
       price: 153,
     },
   ];
@@ -32,12 +32,18 @@ const Jujube = ({ isLoggedIn, setQuantity }) => {
 
   const addToCart = (product) => {
     if (isLoggedIn) {
-      setQuantity((prevQuantity) => prevQuantity + 1);
-
       const username = localStorage.getItem("username");
       const cartKey = `cartItems_${username}`;
-
       let existingCart = [];
+
+      /*增加購物車圖示數量*/
+
+      const CartQuantityKey = `CartQuantity_${username}`;
+      let cartQuantity = localStorage.getItem(CartQuantityKey);
+      cartQuantity = cartQuantity ? parseInt(cartQuantity, 10) : 0;
+      const newQuantity = cartQuantity + 1;
+      localStorage.setItem(CartQuantityKey, newQuantity);
+      setCartQuantity(newQuantity);
 
       try {
         const storedCartItems = localStorage.getItem(cartKey);
@@ -56,13 +62,12 @@ const Jujube = ({ isLoggedIn, setQuantity }) => {
         // 如果商品不存在，添加商品並設置數量為 1
         existingCart.push({ ...product, quantity: 1 });
       }
+      alert("加入購物車成功");
       // 儲存更新後的購物車
       localStorage.setItem(cartKey, JSON.stringify(existingCart));
-
-      // existingCart.push(product);
     } else {
       alert("請先登入帳號");
-      navigate("/Login");
+      navigate("/myapp/login");
     }
   };
 

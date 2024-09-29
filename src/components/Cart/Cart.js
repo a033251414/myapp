@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const Cart = ({ isLoggedIn, setQuantity, cartItems, setCartItems }) => {
+const Cart = ({ isLoggedIn, setQuantity, cartItems, setCartItems, setCartQuantity }) => {
   const navigate = useNavigate();
   const username = localStorage.getItem("username");
+  const CartQuantityKey = `CartQuantity_${username}`;
   const [activeButton, setActiveButton] = useState(null);
 
   useEffect(() => {
@@ -20,7 +22,16 @@ const Cart = ({ isLoggedIn, setQuantity, cartItems, setCartItems }) => {
     }
   }, [isLoggedIn, setCartItems, setQuantity]);
 
-  const handleDelete = (indexToRemove) => {
+  /*刪除購物車物品*/
+  const handleDelete = (indexToRemove, quantity, updateQuantity = true) => {
+    /*更新購物車圖示數量*/
+    if (updateQuantity) {
+      let cartQuantity = localStorage.getItem(CartQuantityKey);
+      cartQuantity = cartQuantity ? parseInt(cartQuantity, 10) : 0;
+      const newQuantity = cartQuantity - quantity;
+      localStorage.setItem(CartQuantityKey, newQuantity);
+    }
+
     const cartKey = `cartItems_${username}`;
     const updatedCartItems = cartItems.filter((item, index) => index !== indexToRemove);
     setCartItems(updatedCartItems);
@@ -29,12 +40,18 @@ const Cart = ({ isLoggedIn, setQuantity, cartItems, setCartItems }) => {
   };
 
   const handleQuantityChange = (index, change) => {
+    const intChange = parseInt(change, 10);
+    const currentQuantity = parseInt(localStorage.getItem(CartQuantityKey), 10);
+    const newQuantity = currentQuantity + intChange;
+    localStorage.setItem(CartQuantityKey, newQuantity);
+    setCartQuantity(newQuantity);
+
     const cartKey = `cartItems_${username}`;
     const updatedCartItems = [...cartItems];
     const item = updatedCartItems[index];
 
     if (item.quantity + change <= 0) {
-      handleDelete(index);
+      handleDelete(index, 0, false);
       return;
     }
 
@@ -49,12 +66,12 @@ const Cart = ({ isLoggedIn, setQuantity, cartItems, setCartItems }) => {
     if (!storePickup) {
       alert("請選擇寄送方式");
     } else {
-      navigate("/checkout");
+      navigate("/myapp/checkout");
     }
   };
 
   const handleback = () => {
-    navigate("/");
+    navigate("/myapp");
   };
 
   const habdlestorePickup = (method) => {
@@ -71,11 +88,11 @@ const Cart = ({ isLoggedIn, setQuantity, cartItems, setCartItems }) => {
   }, 0);
 
   return (
-    <div className="cart">
+    <div className="cart-container">
       <div>
         <h1>您的購物車</h1>
         <button onClick={handleback} className="cart-back">
-          ⬅
+          <p>返回</p>
         </button>
       </div>
       {isLoggedIn ? (
@@ -120,7 +137,10 @@ const Cart = ({ isLoggedIn, setQuantity, cartItems, setCartItems }) => {
                     <p>${item.price * item.quantity}</p>
                   </td>
                   <td>
-                    <button className="delete-button" onClick={() => handleDelete(index)}>
+                    <button
+                      className="delete-button"
+                      onClick={() => handleDelete(index, item.quantity)}
+                    >
                       移除
                     </button>
                   </td>
@@ -158,7 +178,7 @@ const Cart = ({ isLoggedIn, setQuantity, cartItems, setCartItems }) => {
                 <td className="cart-total-amount" colSpan="2">
                   <div className="total-amount-container">
                     <button className="place-order-button" onClick={handlePlaceOrder}>
-                      前往下訂單
+                      <p>前往下訂單</p>
                     </button>
                   </div>
                 </td>
@@ -170,7 +190,7 @@ const Cart = ({ isLoggedIn, setQuantity, cartItems, setCartItems }) => {
         )
       ) : (
         <p className="cart-p">
-          請先<a href="/login">登入</a>以查看購物車內容
+          請先<Link to="/myapp/login">登入</Link>以查看購物車內容
         </p>
       )}
     </div>

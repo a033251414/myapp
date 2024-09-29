@@ -26,14 +26,14 @@ const AddProduct = () => {
   const AdminPageShow = () => {
     return (
       <li className="itembox drop-down">
-        <Link className="item" to="/adminpage">
+        <Link className="item" to="/myapp/adminpage">
           管理員操作
         </Link>
         <div className="submenu">
-          <Link className="submenu-item" to="/addproduct">
+          <Link className="submenu-item" to="/myapp/addproduct">
             新增商品
           </Link>
-          <Link className="submenu-item" to="/addcoupon">
+          <Link className="submenu-item" to="/myapp/addcoupon">
             新增優惠券
           </Link>
         </div>
@@ -61,15 +61,18 @@ const AddProduct = () => {
   };
   const handleCreate = async () => {
     try {
-      const response = await axios.post("http://localhost:8080/addproduct", {
-        isAdmin,
-        productName,
-        description,
-        price,
-        category,
-        stock,
-        imageUrl,
-      });
+      const response = await axios.post(
+        "https://myapp1-test-3490f09779f0.herokuapp.com/addproduct",
+        {
+          isAdmin,
+          productName,
+          description,
+          price,
+          category,
+          stock,
+          imageUrl,
+        }
+      );
       if (response.status === 201) {
         alert("新增商品成功");
       }
@@ -85,25 +88,25 @@ const AddProduct = () => {
       <div className="profile-menu-container">
         <ul className="menu">
           <li className="itembox drop-down">
-            <Link className="item" to="/profile">
+            <Link className="item" to="/myapp/profile">
               我的帳戶
             </Link>
             <div className="submenu">
-              <Link className="submenu-item" to="/profile">
+              <Link className="submenu-item" to="/myapp/profile">
                 個人檔案
               </Link>
-              <Link className="submenu-item" to="/passwordcheck">
+              <Link className="submenu-item" to="/myapp/passwordcheck">
                 更改密碼
               </Link>
             </div>
           </li>
           <li className="itembox drop-down">
-            <Link className="item" to="/shoppinglist">
+            <Link className="item" to="/myapp/shoppinglist">
               購買清單
             </Link>
           </li>
           <li className="itembox drop-down">
-            <Link className="item" to="/mycoupons">
+            <Link className="item" to="/myapp/mycoupons">
               我的優惠券
             </Link>
           </li>

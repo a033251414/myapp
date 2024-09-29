@@ -15,7 +15,9 @@ const Checkout = ({ isLoggedIn, cartItems, setCartItems }) => {
   const [deductShipping, setDeductShipping] = useState(0);
   const [finalAmountSave, setFinalAmountSave] = useState(0);
   const [couponId, setCouponId] = useState(null);
-
+  const availableCoupons = coupons.filter((coupon) => coupon.usageLimit !== coupon.usedTimes);
+  const username = localStorage.getItem("username");
+  const CartQuantityKey = `CartQuantity_${username}`;
   /*抓取購物明細*/
 
   useEffect(() => {
@@ -38,13 +40,15 @@ const Checkout = ({ isLoggedIn, cartItems, setCartItems }) => {
     const token = localStorage.getItem("token");
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/checkout", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          "https://myapp1-test-3490f09779f0.herokuapp.com/checkout",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setCoupons(response.data);
-        console.log(response.data);
       } catch (error) {
         console.log("取得優惠券資料失敗:", error);
       }
@@ -63,18 +67,6 @@ const Checkout = ({ isLoggedIn, cartItems, setCartItems }) => {
     const finalAmount = deductShipping ? amountWithShipping - deductShipping : amountWithShipping;
     setFinalAmountSave(finalAmount);
   }, [cartItems, deductShipping, DeliveryMethod]);
-
-  /*確認優惠券使用限制函式*/
-  const checkUsageLimitReached = (CouponId) => {
-    const isCoupon = coupons.find((item) => item.coupon._id === CouponId);
-    if (isCoupon) {
-      if (isCoupon.usedTimes === isCoupon.usageLimit) {
-        alert("此優惠券已達使用上限");
-      }
-    } else {
-      console.log("找不到優惠券");
-    }
-  };
 
   /*商品總共費用組件*/
 
@@ -108,6 +100,10 @@ const Checkout = ({ isLoggedIn, cartItems, setCartItems }) => {
     setTel(e.target.value);
   };
 
+  const handleback = () => {
+    navigate("/myapp/cart");
+  };
+
   /*確認訂單送出*/
   const handleSubmit = async () => {
     const username = localStorage.getItem("username");
@@ -120,7 +116,7 @@ const Checkout = ({ isLoggedIn, cartItems, setCartItems }) => {
       const items = JSON.parse(cartData);
       try {
         const response = await axios.post(
-          "http://localhost:8080/checkout",
+          "https://myapp1-test-3490f09779f0.herokuapp.com/checkout",
           {
             couponId,
             items,
@@ -131,15 +127,26 @@ const Checkout = ({ isLoggedIn, cartItems, setCartItems }) => {
           },
           {
             headers: {
-              Authorization: `Bearer ${token}`, // 確保傳送了 token
+              Authorization: `Bearer ${token}`,
             },
           }
         );
         if (response.status === 201) {
+          /*測試*/
+          await axios.post("https://myapp1-test-3490f09779f0.herokuapp.com/checkout/send-to-line", {
+            recipientName,
+            tel,
+            address,
+            items,
+            total,
+          });
+
           alert("已完成訂購");
           localStorage.removeItem(cartKey);
+          localStorage.removeItem(CartQuantityKey);
           localStorage.setItem("DeliveryMethod", "");
-          navigate("/placeorder");
+
+          navigate("/myapp/placeorder");
         }
       } catch (error) {
         console.error("Error:", error);
@@ -166,7 +173,7 @@ const Checkout = ({ isLoggedIn, cartItems, setCartItems }) => {
             isActive == CouponId ? "coupon-modal-select-btn-active" : "coupon-modal-select-btn"
           }
         >
-          <img className="coupon-modal-img" src="/免運券.png" alt="優惠券"></img>
+          <img className="coupon-modal-img" src="/myapp/免運券.png" alt="優惠券"></img>
         </button>
       );
     }
@@ -176,13 +183,10 @@ const Checkout = ({ isLoggedIn, cartItems, setCartItems }) => {
   /*點擊優惠券*/
 
   const handleisActive = (CouponId, discountAmount, usedTimes, usageLimit) => {
-    console.log(usedTimes);
-    console.log(usageLimit);
     if (usedTimes !== usageLimit) {
       setIsActive(CouponId);
       setCouponId(CouponId);
       setDeductShipping(discountAmount);
-      checkUsageLimitReached(CouponId);
     } else {
       alert("您已使用過優惠券");
     }
@@ -224,7 +228,7 @@ const Checkout = ({ isLoggedIn, cartItems, setCartItems }) => {
                 </td>
                 <td>
                   <button onClick={handleModalOpen} className="use-coupon-btn">
-                    使用優惠券
+                    <p>使用優惠券</p>
                   </button>
                   <div>
                     {/*動態彈出視窗*/}
@@ -233,16 +237,16 @@ const Checkout = ({ isLoggedIn, cartItems, setCartItems }) => {
                         <div className="coupon-modal-title">請選擇優惠券</div>
                         <table>
                           <tbody>
-                            {coupons.length > 0 ? (
-                              coupons.map((claimedCoupon) => (
-                                <tr key={claimedCoupon._id}>
+                            {availableCoupons.length > 0 ? (
+                              availableCoupons.map((availableCoupons) => (
+                                <tr key={availableCoupons._id}>
                                   <div>
                                     <td>
                                       <CouponImg
-                                        discountAmount={claimedCoupon.coupon.discountAmount}
-                                        CouponId={claimedCoupon.coupon._id}
-                                        usageLimit={claimedCoupon.usageLimit}
-                                        usedTimes={claimedCoupon.usedTimes}
+                                        discountAmount={availableCoupons.coupon.discountAmount}
+                                        CouponId={availableCoupons.coupon._id}
+                                        usageLimit={availableCoupons.usageLimit}
+                                        usedTimes={availableCoupons.usedTimes}
                                       />
                                     </td>
                                   </div>
@@ -308,11 +312,11 @@ const Checkout = ({ isLoggedIn, cartItems, setCartItems }) => {
   };
 
   return (
-    <div className="cart">
+    <div className="cart-container">
       <div>
         <h1>購物明細</h1>
-        <button onClick={() => navigate(-1)} className="cart-back">
-          ⬅
+        <button onClick={handleback} className="cart-back">
+          <p>返回</p>
         </button>
       </div>
 
@@ -320,95 +324,98 @@ const Checkout = ({ isLoggedIn, cartItems, setCartItems }) => {
 
       {isLoggedIn ? (
         cartItems.length > 0 ? (
-          <table className="cart-table">
-            <thead>
-              <tr className="cart-tr">
-                <th>商品</th>
-                <th>單價</th>
-                <th>數量</th>
-                <th>總計</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cartItems.map((item, index) => (
-                <tr key={index} className="cart-tr">
-                  <td>
-                    <img className="cart-img" src={item.imgSrc} alt={item.name} />
-                    <p>{item.name}</p>
-                  </td>
-                  <td>
-                    <p>{item.price}</p>
-                  </td>
-                  <td>
-                    <div className="quantity-container">
-                      <p className="quantity-number">{item.quantity}</p>
-                    </div>
-                  </td>
-                  <td>
-                    <p>${item.price * item.quantity}</p>
-                  </td>
+          <div>
+            {" "}
+            <table className="cart-table">
+              <thead>
+                <tr className="cart-tr">
+                  <th>商品</th>
+                  <th>單價</th>
+                  <th>數量</th>
+                  <th>總計</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {cartItems.map((item, index) => (
+                  <tr key={index} className="cart-tr">
+                    <td>
+                      <img className="cart-img" src={item.imgSrc} alt={item.name} />
+                      <p>{item.name}</p>
+                    </td>
+                    <td>
+                      <p>{item.price}</p>
+                    </td>
+                    <td>
+                      <div className="quantity-container">
+                        <p className="quantity-number">{item.quantity}</p>
+                      </div>
+                    </td>
+                    <td>
+                      <p>${item.price * item.quantity}</p>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {/*寄件資訊*/}
+            <div className="checkout-container">
+              <table className="checkout">
+                <tbody>
+                  <tr>
+                    <td>收件人資訊</td>
+                    <td>
+                      <div>
+                        <label className="checkout-recipient-label" htmlFor="name">
+                          姓名：
+                        </label>
+                        <input
+                          onChange={handleNameChange}
+                          value={recipientName}
+                          className="checkout-recipient-input"
+                          id="name"
+                          type="text"
+                        />
+                        <label className="checkout-recipient-label" htmlFor="tel">
+                          電話：
+                        </label>
+                        <input
+                          onChange={handleTelChange}
+                          value={tel}
+                          className="checkout-recipient-input"
+                          id="tel"
+                          type="text"
+                        />
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>寄送方式</td>
+                    <td>{renderContent()}</td>
+                  </tr>
+
+                  <tr>
+                    <td></td>
+                    <td>
+                      <div className="confirm-order-container">
+                        <button onClick={handleSubmit} className="confirm-order-btn">
+                          <p>確認送出</p>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         ) : (
           <p className="cart-p">您的購物車是空的</p>
         )
       ) : (
         <p className="cart-p">
-          請先<a href="/login">登入</a>以查看購物車內容
+          請先<a href="/myapp/login">登入</a>以查看內容
         </p>
       )}
-
-      {/*寄件資訊*/}
-
-      <table className="checkout">
-        <tbody>
-          <tr>
-            <td>收件人資訊</td>
-            <td>
-              <div>
-                <label className="checkout-recipient-label" htmlFor="name">
-                  姓名：
-                </label>
-                <input
-                  onChange={handleNameChange}
-                  value={recipientName}
-                  className="checkout-recipient-input"
-                  id="name"
-                  type="text"
-                />
-                <label className="checkout-recipient-label" htmlFor="tel">
-                  電話：
-                </label>
-                <input
-                  onChange={handleTelChange}
-                  value={tel}
-                  className="checkout-recipient-input"
-                  id="tel"
-                  type="text"
-                />
-              </div>
-            </td>
-          </tr>
-
-          <tr>
-            <td>寄送方式</td>
-            <td>{renderContent()}</td>
-          </tr>
-
-          <tr>
-            <td></td>
-            <td>
-              <div className="confirm-order-container">
-                <button onClick={handleSubmit} className="confirm-order">
-                  確認送出
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   );
 };

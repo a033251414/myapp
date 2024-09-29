@@ -16,15 +16,18 @@ const PasswordCheck = ({ passwordSuccess, setPasswordSuccess }) => {
       email = decodedToken.email;
     }
     try {
-      const response = await axios.post("http://localhost:8080/passwordcheck", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "https://myapp1-test-3490f09779f0.herokuapp.com/passwordcheck",
+        {
+          email,
+          password,
+        }
+      );
       if (response.status === 200) {
         setPasswordSuccess(true);
         localStorage.setItem("passwordSuccess", passwordSuccess);
         alert("密碼正確");
-        navigate("/passwordchange");
+        navigate("/myapp/passwordchange");
       }
     } catch (err) {
       if (err.response && err.response.data) {
@@ -34,7 +37,7 @@ const PasswordCheck = ({ passwordSuccess, setPasswordSuccess }) => {
   };
 
   const handleBack = () => {
-    navigate("/profile");
+    navigate("/myapp/profile");
   };
 
   return (

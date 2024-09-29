@@ -1,30 +1,30 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-const Driedmango = ({ isLoggedIn, setQuantity }) => {
+const Driedmango = ({ isLoggedIn, setCartQuantity }) => {
   const products = [
     {
       name: "原味情人果乾",
-      imgSrc: "/零食/果乾/芒果乾/原味情人果乾(120g113$).png",
+      imgSrc: "/myapp/零食/果乾/芒果乾/原味情人果乾(120g113$).png",
       price: 113,
     },
     {
       name: "泰國芒果乾",
-      imgSrc: "/零食/果乾/芒果乾/泰國芒果乾(150G114$).png",
+      imgSrc: "/myapp/零食/果乾/芒果乾/泰國芒果乾(150G114$).png",
       price: 114,
     },
     {
       name: "無蔗糖添加愛文",
-      imgSrc: "/零食/果乾/芒果乾/無蔗糖添加愛文(120g220$).png",
+      imgSrc: "/myapp/零食/果乾/芒果乾/無蔗糖添加愛文(120g220$).png",
       price: 220,
     },
     {
       name: "無糖愛文芒果乾",
-      imgSrc: "/零食/果乾/芒果乾/無糖愛文芒果乾(160g181$).png",
+      imgSrc: "/myapp/零食/果乾/芒果乾/無糖愛文芒果乾(160g181$).png",
       price: 181,
     },
     {
       name: "辣芒果乾",
-      imgSrc: "/零食/果乾/芒果乾/辣芒果乾(180G85$).png",
+      imgSrc: "/myapp/零食/果乾/芒果乾/辣芒果乾(180G85$).png",
       price: 85,
     },
   ];
@@ -32,13 +32,18 @@ const Driedmango = ({ isLoggedIn, setQuantity }) => {
 
   const addToCart = (product) => {
     if (isLoggedIn) {
-      setQuantity((prevQuantity) => prevQuantity + 1);
-
       const username = localStorage.getItem("username");
       const cartKey = `cartItems_${username}`;
-
       let existingCart = [];
 
+      /*增加購物車圖示數量*/
+
+      const CartQuantityKey = `CartQuantity_${username}`;
+      let cartQuantity = localStorage.getItem(CartQuantityKey);
+      cartQuantity = cartQuantity ? parseInt(cartQuantity, 10) : 0;
+      const newQuantity = cartQuantity + 1;
+      localStorage.setItem(CartQuantityKey, newQuantity);
+      setCartQuantity(newQuantity);
       try {
         const storedCartItems = localStorage.getItem(cartKey);
         existingCart = storedCartItems ? JSON.parse(storedCartItems) : [];
@@ -56,13 +61,12 @@ const Driedmango = ({ isLoggedIn, setQuantity }) => {
         // 如果商品不存在，添加商品並設置數量為 1
         existingCart.push({ ...product, quantity: 1 });
       }
+      alert("加入購物車成功");
       // 儲存更新後的購物車
       localStorage.setItem(cartKey, JSON.stringify(existingCart));
-
-      // existingCart.push(product);
     } else {
       alert("請先登入帳號");
-      navigate("/Login");
+      navigate("/myapp/login");
     }
   };
 

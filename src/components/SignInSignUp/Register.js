@@ -9,39 +9,39 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate("/");
+    navigate("/myapp");
   };
 
   const handleRegister = async () => {
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      alert("密碼不一致！");
       return;
     }
 
     try {
-      const response = await axios.post("http://localhost:8080/register", {
+      const response = await axios.post("https://myapp1-test-3490f09779f0.herokuapp.com/register", {
         email,
         password,
         confirmPassword,
       });
 
       if (response.status === 201) {
-        alert("Registration successful");
-        navigate("/login");
+        alert("註冊成功！");
+        navigate("/myapp/login");
         setEmail("");
         setPassword("");
         setConfirmPassword("");
       } else {
-        alert(response.data.message || "An error occurred. Please try again.");
+        alert(response.data.message || "發生錯誤，請重新再試");
       }
     } catch (err) {
       console.error("Error:", err.response ? err.response.data : err.message);
-      alert("An error occurred. Please try again.");
+      alert("發生錯誤，請重新再試");
     }
   };
 
   return (
-    <div className="RegisterPage">
+    <div className="registerpage-container">
       <div>
         <label htmlFor="Email">電子郵件：</label>
         <input
@@ -53,7 +53,7 @@ const Register = () => {
         />
       </div>
       <div>
-        <label htmlFor="Password">密碼：</label>
+        <label htmlFor="Password">輸入密碼：</label>
         <input
           id="Password"
           type="password"

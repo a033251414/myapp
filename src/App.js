@@ -6,10 +6,10 @@ import "slick-carousel/slick/slick-theme.css";
 import Nav from "./components/Nav";
 import HomePage from "./components/HomePage";
 import Coupon from "./components/Coupon";
-import { Background, Footer } from "./components/Background";
+import { Background } from "./components/Background";
 import { Register, Login } from "./components/SignInSignUp";
 import { Cart, Checkout } from "./components/Cart";
-import { EmailChange, PhoneChange } from "./components/Profile/Change";
+import { PhoneChange } from "./components/Profile/Change";
 import { PasswordChange, PasswordCheck } from "./components/Profile/PasswordChange";
 import {
   Cookie,
@@ -27,7 +27,7 @@ import {
   Raisin,
 } from "./components/commodity/Driedfruits";
 import { Almond, Cashew, Nut, Peanut, Pistachio } from "./components/commodity/Nut";
-import { AddCoupon, AddProduct, AdminPage } from "./components/Profile/Admin";
+import { AddCoupon, AddProduct } from "./components/Profile/Admin";
 import Profile from "./components/Profile/Profile";
 import MyCoupons from "./components/Profile/MyCoupons";
 import ProtectedRoute from "./components/Profile/PasswordChange/ProtectedRoute";
@@ -35,13 +35,20 @@ import { OrderUpdate, OrderDetail, ShoppingList } from "./components/Profile/Ord
 import PlaceOrder from "./components/Cart/PlaceOrder";
 function App() {
   const location = useLocation();
-  const noNavRoutes = ["/register", "/login", "/Coupon", "/passwordcheck", "/placeorder"];
-  const HomePageRoutes = ["/"];
+  const noNavRoutes = [
+    "/myapp/register",
+    "/myapp/login",
+    "/myapp/Coupon",
+    "/myapp/passwordcheck",
+    "/myapp/placeorder",
+  ];
+  const HomePageRoutes = ["/myapp"];
 
   const [cartItems, setCartItems] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [quantity, setQuantity] = useState(0);
   const [passwordSuccess, setPasswordSuccess] = useState(false);
+  const [cartQuantity, setCartQuantity] = useState(0);
 
   useEffect(() => {
     // 檢查 localStorage 是否有登入資訊
@@ -53,114 +60,222 @@ function App() {
 
   const routesConfig = [
     {
-      path: "/cookie",
-      element: <Cookie isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/cookie",
+      element: <Cookie isLoggedIn={isLoggedIn} setCartQuantity={setCartQuantity} />,
     },
     {
-      path: "/crisps",
-      element: <Crisps isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/crisps",
+      element: (
+        <Crisps
+          isLoggedIn={isLoggedIn}
+          setQuantity={setQuantity}
+          setCartQuantity={setCartQuantity}
+        />
+      ),
     },
     {
-      path: "/eggroll",
-      element: <Eggroll isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/eggroll",
+      element: (
+        <Eggroll
+          isLoggedIn={isLoggedIn}
+          setQuantity={setQuantity}
+          setCartQuantity={setCartQuantity}
+        />
+      ),
     },
     {
-      path: "/sandwichcookie",
-      element: <Sandwichcookie isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/sandwichcookie",
+      element: (
+        <Sandwichcookie
+          isLoggedIn={isLoggedIn}
+          setQuantity={setQuantity}
+          setCartQuantity={setCartQuantity}
+        />
+      ),
     },
     {
-      path: "/sodacracker",
-      element: <Sodacracker isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/sodacracker",
+      element: (
+        <Sodacracker
+          isLoggedIn={isLoggedIn}
+          setQuantity={setQuantity}
+          setCartQuantity={setCartQuantity}
+        />
+      ),
     },
 
     {
-      path: "/candy",
-      element: <Candy isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/candy",
+      element: (
+        <Candy
+          isLoggedIn={isLoggedIn}
+          setQuantity={setQuantity}
+          setCartQuantity={setCartQuantity}
+        />
+      ),
     },
     {
-      path: "/caramel",
-      element: <Caramel isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/caramel",
+      element: (
+        <Caramel
+          isLoggedIn={isLoggedIn}
+          setQuantity={setQuantity}
+          setCartQuantity={setCartQuantity}
+        />
+      ),
     },
     {
-      path: "/chewinggum",
-      element: <Chewinggum isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/chewinggum",
+      element: (
+        <Chewinggum
+          isLoggedIn={isLoggedIn}
+          setQuantity={setQuantity}
+          setCartQuantity={setCartQuantity}
+        />
+      ),
     },
     {
-      path: "/gummy",
-      element: <Gummy isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/gummy",
+      element: (
+        <Gummy
+          isLoggedIn={isLoggedIn}
+          setQuantity={setQuantity}
+          setCartQuantity={setCartQuantity}
+        />
+      ),
     },
     {
-      path: "/throatlozenge",
-      element: <Throatlozenge isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/throatlozenge",
+      element: (
+        <Throatlozenge
+          isLoggedIn={isLoggedIn}
+          setQuantity={setQuantity}
+          setCartQuantity={setCartQuantity}
+        />
+      ),
     },
     {
-      path: "/driedfruits",
-      element: <Driedfruits isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/driedfruits",
+      element: (
+        <Driedfruits
+          isLoggedIn={isLoggedIn}
+          setQuantity={setQuantity}
+          setCartQuantity={setCartQuantity}
+        />
+      ),
     },
     {
-      path: "/driedmango",
-      element: <Driedmango isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/driedmango",
+      element: (
+        <Driedmango
+          isLoggedIn={isLoggedIn}
+          setQuantity={setQuantity}
+          setCartQuantity={setCartQuantity}
+        />
+      ),
     },
     {
-      path: "/driedpineapple",
-      element: <Driedpineapple isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/driedpineapple",
+      element: (
+        <Driedpineapple
+          isLoggedIn={isLoggedIn}
+          setQuantity={setQuantity}
+          setCartQuantity={setCartQuantity}
+        />
+      ),
     },
     {
-      path: "/jujube",
-      element: <Jujube isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/jujube",
+      element: (
+        <Jujube
+          isLoggedIn={isLoggedIn}
+          setQuantity={setQuantity}
+          setCartQuantity={setCartQuantity}
+        />
+      ),
     },
     {
-      path: "/raisin",
-      element: <Raisin isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/raisin",
+      element: (
+        <Raisin
+          isLoggedIn={isLoggedIn}
+          setQuantity={setQuantity}
+          setCartQuantity={setCartQuantity}
+        />
+      ),
     },
     {
-      path: "/nut",
-      element: <Nut isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/nut",
+      element: (
+        <Nut isLoggedIn={isLoggedIn} setQuantity={setQuantity} setCartQuantity={setCartQuantity} />
+      ),
     },
     {
-      path: "/almond",
-      element: <Almond isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/almond",
+      element: (
+        <Almond
+          isLoggedIn={isLoggedIn}
+          setQuantity={setQuantity}
+          setCartQuantity={setCartQuantity}
+        />
+      ),
     },
     {
-      path: "/cashew",
-      element: <Cashew isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/cashew",
+      element: (
+        <Cashew
+          isLoggedIn={isLoggedIn}
+          setQuantity={setQuantity}
+          setCartQuantity={setCartQuantity}
+        />
+      ),
     },
     {
-      path: "/peanut",
-      element: <Peanut isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/peanut",
+      element: (
+        <Peanut
+          isLoggedIn={isLoggedIn}
+          setQuantity={setQuantity}
+          setCartQuantity={setCartQuantity}
+        />
+      ),
     },
     {
-      path: "/pistachio",
-      element: <Pistachio isLoggedIn={isLoggedIn} setQuantity={setQuantity} />,
+      path: "/myapp/pistachio",
+      element: (
+        <Pistachio
+          isLoggedIn={isLoggedIn}
+          setQuantity={setQuantity}
+          setCartQuantity={setCartQuantity}
+        />
+      ),
     },
-    { path: "/coupon", element: <Coupon isLoggedIn={isLoggedIn} /> },
-    { path: "/profile", element: <Profile isLoggedIn={isLoggedIn} /> },
-    { path: "/adminpage", element: <AdminPage /> },
-    { path: "/addcoupon", element: <AddCoupon /> },
-    { path: "/addproduct", element: <AddProduct /> },
-    { path: "/register", element: <Register /> },
-    { path: "/login", element: <Login setIsLoggedIn={setIsLoggedIn} /> },
-    { path: "/emailchange", element: <EmailChange /> },
-    { path: "/phonechange", element: <PhoneChange /> },
-    { path: "/shoppinglist", element: <ShoppingList /> },
-    { path: "/orderupdate/:orderId", element: <OrderUpdate /> },
-    { path: "/orderdetail/:orderId", element: <OrderDetail /> },
+    { path: "/myapp/coupon", element: <Coupon isLoggedIn={isLoggedIn} /> },
+    { path: "/myapp/profile", element: <Profile isLoggedIn={isLoggedIn} /> },
+    { path: "/myapp/addcoupon", element: <AddCoupon /> },
+    { path: "/myapp/addproduct", element: <AddProduct /> },
+    { path: "/myapp/register", element: <Register /> },
+    { path: "/myapp/login", element: <Login setIsLoggedIn={setIsLoggedIn} /> },
+    { path: "/myapp/phonechange", element: <PhoneChange /> },
+    { path: "/myapp/shoppinglist", element: <ShoppingList isLoggedIn={isLoggedIn} /> },
+    { path: "/myapp/orderupdate/:orderId", element: <OrderUpdate /> },
+    { path: "/myapp/orderdetail/:orderId", element: <OrderDetail /> },
 
-    { path: "/placeorder", element: <PlaceOrder /> },
+    { path: "/myapp/placeorder", element: <PlaceOrder /> },
 
     {
-      path: "/passwordchange",
+      path: "/myapp/passwordchange",
       element: <ProtectedRoute isAuthenticated={passwordSuccess} element={<PasswordChange />} />,
     },
     {
-      path: "/passwordcheck",
+      path: "/myapp/passwordcheck",
       element: (
         <PasswordCheck passwordSuccess={passwordSuccess} setPasswordSuccess={setPasswordSuccess} />
       ),
     },
-    { path: "/mycoupons", element: <MyCoupons /> },
+    { path: "/myapp/mycoupons", element: <MyCoupons isLoggedIn={isLoggedIn} /> },
     {
-      path: "/cart",
+      path: "/myapp/cart",
       element: (
         <Cart
           isLoggedIn={isLoggedIn}
@@ -168,11 +283,12 @@ function App() {
           setQuantity={setQuantity}
           cartItems={cartItems}
           setCartItems={setCartItems}
+          setCartQuantity={setCartQuantity}
         />
       ),
     },
     {
-      path: "/checkout",
+      path: "/myapp/checkout",
       element: (
         <Checkout
           isLoggedIn={isLoggedIn}
@@ -188,7 +304,12 @@ function App() {
   return (
     <div className="App">
       {!noNavRoutes.includes(location.pathname) && (
-        <Nav setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />
+        <Nav
+          setIsLoggedIn={setIsLoggedIn}
+          isLoggedIn={isLoggedIn}
+          cartQuantity={cartQuantity}
+          setCartQuantity={setCartQuantity}
+        />
       )}
       {HomePageRoutes.includes(location.pathname) && <HomePage />}
 
@@ -199,8 +320,6 @@ function App() {
           <Route key={path} path={path} element={element} />
         ))}
       </Routes>
-
-      <Footer />
     </div>
   );
 }

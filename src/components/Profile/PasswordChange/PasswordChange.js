@@ -16,13 +16,16 @@ const PasswordChange = () => {
     }
     if (newPassword == passwordCheck) {
       try {
-        const response = await axios.put("http://localhost:8080/passwordchange", {
-          email,
-          newPassword,
-        });
+        const response = await axios.put(
+          "https://myapp1-test-3490f09779f0.herokuapp.com/passwordchange",
+          {
+            email,
+            newPassword,
+          }
+        );
         if (response.status === 200) {
           alert("密碼修改成功");
-          navigate("/profile");
+          navigate("/myapp/profile");
         }
       } catch (err) {
         const errorMessage =
@@ -38,25 +41,25 @@ const PasswordChange = () => {
       <div className="profile-menu-container">
         <ul className="menu">
           <li className="itembox drop-down">
-            <Link className="item" to="/profile">
+            <Link className="item" to="/myapp/profile">
               我的帳戶
             </Link>
             <div className="submenu">
-              <Link className="submenu-item" to="/profile">
+              <Link className="submenu-item" to="/myapp/profile">
                 個人檔案
               </Link>
-              <Link className="submenu-item" to="/passwordcheck">
+              <Link className="submenu-item" to="/myapp/passwordcheck">
                 更改密碼
               </Link>
             </div>
           </li>
           <li className="itembox drop-down">
-            <Link className="item" to="/shoppinglist">
+            <Link className="item" to="/myapp/shoppinglist">
               購買清單
             </Link>
           </li>
           <li className="itembox drop-down">
-            <Link className="item" to="/mycoupons">
+            <Link className="item" to="/myapp/mycoupons">
               我的優惠券
             </Link>
           </li>

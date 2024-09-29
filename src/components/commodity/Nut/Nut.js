@@ -1,107 +1,107 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-const Nut = ({ isLoggedIn, setQuantity }) => {
+const Nut = ({ isLoggedIn, setCartQuantity }) => {
   const products = [
     {
       name: "低溫烘焙原味杏仁",
-      imgSrc: "/零食/堅果/杏仁果/低溫烘焙原味杏仁(300g罐350$).png",
+      imgSrc: "/myapp/零食/堅果/杏仁果/低溫烘焙原味杏仁(300g罐350$).png",
       price: 350,
     },
     {
       name: "杏仁小魚",
-      imgSrc: "/零食/堅果/杏仁果/杏仁小魚(115g包111$).png",
+      imgSrc: "/myapp/零食/堅果/杏仁果/杏仁小魚(115g包111$).png",
       price: 111,
     },
     {
       name: "杏仁果",
-      imgSrc: "/零食/堅果/杏仁果/杏仁果(142g包111$).png",
+      imgSrc: "/myapp/零食/堅果/杏仁果/杏仁果(142g包111$).png",
       price: 111,
     },
     {
       name: "海苔杏仁小魚",
-      imgSrc: "/零食/堅果/杏仁果/海苔杏仁小魚(115g包111$).png",
+      imgSrc: "/myapp/零食/堅果/杏仁果/海苔杏仁小魚(115g包111$).png",
       price: 111,
     },
     {
       name: "無調味烘焙杏仁果",
-      imgSrc: "/零食/堅果/杏仁果/無調味烘焙杏仁果(160g包134$).png",
+      imgSrc: "/myapp/零食/堅果/杏仁果/無調味烘焙杏仁果(160g包134$).png",
       price: 134,
     },
     {
       name: "可可腰果",
-      imgSrc: "/零食/堅果/腰果/可可腰果(60g包108$).png",
+      imgSrc: "/myapp/零食/堅果/腰果/可可腰果(60g包108$).png",
       price: 108,
     },
     {
       name: "無調味烘焙腰果",
-      imgSrc: "/零食/堅果/腰果/無調味烘焙腰果(160g包134$).png",
+      imgSrc: "/myapp/零食/堅果/腰果/無調味烘焙腰果(160g包134$).png",
       price: 134,
     },
     {
       name: "越南鹽酥帶皮腰果",
-      imgSrc: "/零食/堅果/腰果/越南頂級鹽酥帶皮腰果(480g271$).png",
+      imgSrc: "/myapp/零食/堅果/腰果/越南頂級鹽酥帶皮腰果(480g271$).png",
       price: 271,
     },
     {
       name: "風堂腰果",
-      imgSrc: "/零食/堅果/腰果/楓糖腰果(140g包111$).png",
+      imgSrc: "/myapp/零食/堅果/腰果/楓糖腰果(140g包111$).png",
       price: 111,
     },
     {
       name: "蜜汁腰果",
-      imgSrc: "/零食/堅果/腰果/蜜汁腰果(140g包111$).png",
+      imgSrc: "/myapp/零食/堅果/腰果/蜜汁腰果(140g包111$).png",
       price: 111,
     },
     {
       name: "大哥椰漿味花生豆",
-      imgSrc: "/零食/堅果/花生/大哥椰漿味花生豆(90g55$).png",
+      imgSrc: "/myapp/零食/堅果/花生/大哥椰漿味花生豆(90g55$).png",
       price: 55,
     },
     {
       name: "小魚干脆花生",
-      imgSrc: "/零食/堅果/花生/小魚干脆花生(84g67$).png",
+      imgSrc: "/myapp/零食/堅果/花生/小魚干脆花生(84g67$).png",
       price: 67,
     },
 
     {
       name: "黑金剛花生",
-      imgSrc: "/零食/堅果/花生/黑金剛花生(500gX1包211$).png",
+      imgSrc: "/myapp/零食/堅果/花生/黑金剛花生(500gX1包211$).png",
       price: 211,
     },
 
     {
       name: "蒜味花生",
-      imgSrc: "/零食/堅果/花生/蒜味花生(130g5$).png",
+      imgSrc: "/myapp/零食/堅果/花生/蒜味花生(130g5$).png",
       price: 130,
     },
     {
       name: "辣味柿米果小魚干花生",
-      imgSrc: "/零食/堅果/花生/辣味柿米果小魚干花生(80g包87$).png",
+      imgSrc: "/myapp/零食/堅果/花生/辣味柿米果小魚干花生(80g包87$).png",
       price: 87,
     },
     {
       name: "原味珍珠開心果",
-      imgSrc: "/零食/堅果/開心果/原味珍珠開心果(300g罐272$).png",
+      imgSrc: "/myapp/零食/堅果/開心果/原味珍珠開心果(300g罐272$).png",
       price: 55,
     },
     {
       name: "無調味珍珠開心果",
-      imgSrc: "/零食/堅果/開心果/無調味珍珠開心果(160g包134$).png",
+      imgSrc: "/myapp/零食/堅果/開心果/無調味珍珠開心果(160g包134$).png",
       price: 67,
     },
     {
       name: "開心果",
-      imgSrc: "/零食/堅果/開心果/開心果450G包裝450$.png",
+      imgSrc: "/myapp/零食/堅果/開心果/開心果450G包裝450$.png",
       price: 90,
     },
     {
       name: "源豐瓜子行方開心果",
-      imgSrc: "/零食/堅果/開心果/源豐瓜子行方開心果600g327$.png",
+      imgSrc: "/myapp/零食/堅果/開心果/源豐瓜子行方開心果600g327$.png",
       price: 96,
     },
     {
       name: "經典原味開心果",
-      imgSrc: "/零食/堅果/開心果/經典原味無調味無添加(210g229$).png",
+      imgSrc: "/myapp/零食/堅果/開心果/經典原味無調味無添加(210g229$).png",
       price: 211,
     },
   ];
@@ -109,12 +109,18 @@ const Nut = ({ isLoggedIn, setQuantity }) => {
 
   const addToCart = (product) => {
     if (isLoggedIn) {
-      setQuantity((prevQuantity) => prevQuantity + 1);
-
       const username = localStorage.getItem("username");
       const cartKey = `cartItems_${username}`;
-
       let existingCart = [];
+
+      /*增加購物車圖示數量*/
+
+      const CartQuantityKey = `CartQuantity_${username}`;
+      let cartQuantity = localStorage.getItem(CartQuantityKey);
+      cartQuantity = cartQuantity ? parseInt(cartQuantity, 10) : 0;
+      const newQuantity = cartQuantity + 1;
+      localStorage.setItem(CartQuantityKey, newQuantity);
+      setCartQuantity(newQuantity);
 
       try {
         const storedCartItems = localStorage.getItem(cartKey);
@@ -133,13 +139,12 @@ const Nut = ({ isLoggedIn, setQuantity }) => {
         // 如果商品不存在，添加商品並設置數量為 1
         existingCart.push({ ...product, quantity: 1 });
       }
+      alert("加入購物車成功");
       // 儲存更新後的購物車
       localStorage.setItem(cartKey, JSON.stringify(existingCart));
-
-      // existingCart.push(product);
     } else {
       alert("請先登入帳號");
-      navigate("/Login");
+      navigate("/myapp/login");
     }
   };
 

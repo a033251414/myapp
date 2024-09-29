@@ -4,11 +4,6 @@ import { useNavigate } from "react-router-dom";
 const PlaceOrder = () => {
   const [timeLeft, setTimeLeft] = useState(3);
   const navigate = useNavigate();
-  useEffect(() => {
-    setTimeout(() => {
-      navigate("/");
-    }, 3000);
-  });
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -18,7 +13,7 @@ const PlaceOrder = () => {
       return () => clearTimeout(timer); // 清除計時器
     } else {
       console.log("倒數結束，執行動作");
-      // 可以在這裡執行其他動作，如跳轉頁面
+      navigate("/myapp");
     }
   }, [timeLeft]);
 
